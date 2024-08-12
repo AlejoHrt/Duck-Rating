@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pato Valoración</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="slider-container">
+        <div class="emoji-display" id="emojiDisplay">🦆</div>
+        <input type="range" min="1" max="5" value="1" step="0.1" class="slider" id="emojiSlider">
+        <div class="number-display" id="numberDisplay">1</div>
+    </div>
+
+    <script>
+        const slider = document.getElementById("emojiSlider");
+        const emojiDisplay = document.getElementById("emojiDisplay");
+        const numberDisplay = document.getElementById("numberDisplay");
+
+        slider.oninput = function() {
+            const value = this.value;
+            numberDisplay.innerText = value;
+            emojiDisplay.innerText = "🦆".repeat(Math.floor(value));
+            // Send the value to the server
+            fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ value: value }),
+            });
+        }
+    </script>
+</body>
+</html>
